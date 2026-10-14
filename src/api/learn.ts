@@ -20,7 +20,7 @@ interface info {
   body: string;
   id: number;
 }
-const createPost = async (info: info) => {
+export const createPost = async (info: info) => {
   try {
     const res = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
       method: "POST",
@@ -45,7 +45,7 @@ const createPost = async (info: info) => {
   }
 };
 
-const DeletePost = async (id: number) => {
+export const DeletePost = async (id: number) => {
   try {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${id}`,
