@@ -35,10 +35,13 @@ export const createPost = async (info: info) => {
       };
     }
     const data = await res.json();
+
     return {
+      data,
       sucess: true,
       message: `Sent ${status}`,
     };
+
     //i am trying to use it in another component
   } catch (error) {
     throw new Error(`There was an error in the server ${error}`);
@@ -62,11 +65,12 @@ export const DeletePost = async (id: number) => {
         message: `There was an error in removing this  ${deleteId}`,
       };
     }
-
-    return { sucess: true, message: `This ${id} has been deleted` };
     const data = await res.json();
+    return { data, sucess: true, message: `This ${id} has been deleted` };
   } catch {
     return { sucess: false, message: `There was an error in the server` };
     console.log("There was an error in the server");
   }
 };
+
+export const UpdatePost = async (info: info) => {};
