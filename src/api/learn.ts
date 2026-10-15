@@ -68,8 +68,8 @@ export const DeletePost = async (id: number) => {
     const data = await res.json();
     return { data, sucess: true, message: `This ${id} has been deleted` };
   } catch {
-    return { sucess: false, message: `There was an error in the server` };
     console.log("There was an error in the server");
+    return { sucess: false, message: `There was an error in the server` };
   }
 };
 
