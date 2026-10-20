@@ -73,4 +73,19 @@ export const DeletePost = async (id: number) => {
   }
 };
 
-export const UpdatePost = async (info: info) => {};
+export const UpdatePost = async (info: info) => {
+  try {
+    const res = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${info.id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(info),
+      },
+    );
+    const data = await res.json();
+    return { data, sucess: true, message: `Post updated successfully` };
+  } catch (error) {
+    throw new Error(`There was an error in the server ${error}`);
+  }
+};
