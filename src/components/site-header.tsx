@@ -11,6 +11,7 @@ const links = [
   { href: "/lookbook", label: "Lookbook" },
   { href: "/journal", label: "Field notes" },
   { href: "/visit", label: "Find us" },
+  { href: "/Login", label: "Login" },
 ];
 
 export default function SiteHeader() {
