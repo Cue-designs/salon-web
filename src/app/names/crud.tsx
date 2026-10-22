@@ -1,3 +1,7 @@
+import Delete from "./delete";
+import Post from "./post";
+import Update from "./update";
+
 type ApiPost = {
   id: number;
   userId: number;
@@ -184,46 +188,8 @@ export default function Crud({ posts }: { posts: ApiPost[] }) {
                       </td>
                       <td className="px-5 py-4 sm:px-7">
                         <div className="flex justify-end gap-1">
-                          <button
-                            type="button"
-                            aria-label={`Edit post ${post.id}`}
-                            className="grid h-8 w-8 place-items-center text-[var(--wine)]/60 transition-colors hover:bg-[var(--butter)] hover:text-[var(--wine)]"
-                          >
-                            <svg
-                              aria-hidden="true"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                              className="h-3.5 w-3.5"
-                            >
-                              <path
-                                d="m12.8 4.2 3 3M4 16l2.8-.6 9.6-9.6a1.4 1.4 0 0 0-2-2l-9.6 9.6L4 16Z"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1.4"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            type="button"
-                            aria-label={`Delete post ${post.id}`}
-                            className="grid h-8 w-8 place-items-center text-[var(--tomato)]/70 transition-colors hover:bg-[var(--tomato)]/10 hover:text-[var(--tomato)]"
-                          >
-                            <svg
-                              aria-hidden="true"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                              className="h-3.5 w-3.5"
-                            >
-                              <path
-                                d="M4.5 6h11m-9.8 0 .6 9.2h6.4l.6-9.2M8 6V4.5h4V6m-3.5 2.5v4m3-4v4"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1.3"
-                              />
-                            </svg>
-                          </button>
+                          <Update postId={post.id} />
+                          <Delete postId={post.id} />
                         </div>
                       </td>
                     </tr>
@@ -241,47 +207,7 @@ export default function Crud({ posts }: { posts: ApiPost[] }) {
           </section>
 
           <aside className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
-            <section className="border border-[var(--wine)]/15 bg-[var(--paper)]">
-              <div className="border-b border-[var(--wine)]/15 px-5 py-4">
-                <div className="mb-1 text-[8px] font-bold uppercase tracking-[1.4px] text-[var(--tomato)]">
-                  POST /posts
-                </div>
-                <h2 className="font-serif text-2xl leading-none">
-                  Create a post
-                </h2>
-              </div>
-              <div className="space-y-3.5 p-5">
-                <label className="block">
-                  <span className="mb-1.5 block text-[8px] font-bold uppercase tracking-[1px] text-[var(--wine)]/60">
-                    Title
-                  </span>
-                  <input
-                    type="text"
-                    placeholder="A thoughtful title..."
-                    className="h-10 w-full border border-[var(--wine)]/20 bg-transparent px-3 text-[10px] outline-none placeholder:text-[var(--wine)]/40 focus:border-[var(--tomato)]"
-                  />
-                </label>
-                <label className="block">
-                  <span className="mb-1.5 block text-[8px] font-bold uppercase tracking-[1px] text-[var(--wine)]/60">
-                    Body
-                  </span>
-                  <textarea
-                    rows={3}
-                    placeholder="Write a few words..."
-                    className="w-full resize-none border border-[var(--wine)]/20 bg-transparent px-3 py-2.5 text-[10px] leading-5 outline-none placeholder:text-[var(--wine)]/40 focus:border-[var(--tomato)]"
-                  />
-                </label>
-                <button
-                  type="button"
-                  className="flex h-10 w-full items-center justify-between bg-[var(--tomato)] px-4 text-[9px] font-bold uppercase tracking-[0.8px] text-[var(--paper)] transition-colors hover:bg-[var(--berry)]"
-                >
-                  Send POST request
-                  <span aria-hidden="true" className="text-sm">
-                    →
-                  </span>
-                </button>
-              </div>
-            </section>
+            <Post />
 
             <section className="bg-[var(--wine)] p-5 text-[var(--paper)]">
               <div className="flex items-center justify-between">
