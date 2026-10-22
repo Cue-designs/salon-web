@@ -89,7 +89,3 @@ export const UpdatePost = async (info: info) => {
     throw new Error(`There was an error in the server ${error}`);
   }
 };
-
-export const paginate = () => {
-  return;
-};
