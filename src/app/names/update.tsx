@@ -1,8 +1,19 @@
-export default function Update({ postId }: { postId: number }) {
+import { UpdatePost } from "@/api/learn";
+
+interface info {
+  title: string;
+  body: string;
+  id: number;
+}
+
+export default async function Update(info: info) {
+  const updates = await UpdatePost(info);
+  const newupdates = updates;
+
   return (
     <button
       type="button"
-      aria-label={`Edit post ${postId}`}
+      aria-label={`Edit post `}
       className="grid h-8 w-8 place-items-center text-[var(--wine)]/60 transition-colors hover:bg-[var(--butter)] hover:text-[var(--wine)]"
     >
       <svg

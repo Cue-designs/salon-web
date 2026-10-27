@@ -20,12 +20,12 @@ interface info {
   body: string;
   id: number;
 }
-export const createPost = async (info: info) => {
+export const createPost = async ({ title, body, id }: info) => {
   try {
     const res = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
       method: "POST",
       headers: { " Content-Type": "application/json" },
-      body: JSON.stringify(info),
+      body: JSON.stringify({ title, body, id }),
     });
     const status = res.statusText;
     if (!res.ok) {
