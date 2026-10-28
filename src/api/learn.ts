@@ -1,91 +1,81 @@
-const fetchPost = async () => {
+import { Data } from "@/app/names/crud";
+interface Postcontent {
+  body: Data;
+}
+export async function fetchData() {
+  const apiUrl = process.env.NEXT_API_URL;
+  if (!apiUrl) {
+    return {
+      success: false,
+      message: "Server configuration error: NEXT_API_URL is missing.",
+    };
+  }
   try {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
-
-    if (!res.ok) {
-      throw new Error(` No post shown`);
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      return { success: false, message: "Invalid response" };
     }
-    const data = await res.json();
-    console.log(data);
+    const data = await response.json();
     return data;
   } catch (error) {
-    throw new Error(`There was an error in the server ${error}`);
+    return { success: false, message: `Server error ${error}` };
   }
-};
-
-export default fetchPost;
-
-interface info {
-  title: string;
-  body: string;
-  id: number;
 }
-export const createPost = async ({ title, body, id }: info) => {
-  try {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
-      method: "POST",
-      headers: { " Content-Type": "application/json" },
-      body: JSON.stringify({ title, body, id }),
-    });
-    const status = res.statusText;
-    if (!res.ok) {
-      return {
-        sucess: false,
-        message: `There has been issues with  the sever A ${status}`,
-      };
-    }
-    const data = await res.json();
 
+export async function createPost(content: Postcontent) {
+  const apiUrl = process.env.NEXT_API_URL;
+  if (!apiUrl) {
     return {
-      data,
-      sucess: true,
-      message: `Sent ${status}`,
+      success: false,
+      message: "Server configuration error: NEXT_API_URL is missing.",
     };
-
-    //i am trying to use it in another component
-  } catch (error) {
-    throw new Error(`There was an error in the server ${error}`);
   }
-};
-
-export const DeletePost = async (id: number) => {
   try {
-    const res = await fetch(
-      `https://jsonplaceholder.typicode.com/posts/${id}`,
-      {
-        method: "DELETE",
-        headers: { " Content-Type": "application/json" },
-      },
-    );
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
+      body: JSON.stringify(content.body),
+    });
 
-    if (!res.ok) {
-      const deleteId = id;
-      return {
-        sucess: false,
-        message: `There was an error in removing this  ${deleteId}`,
-      };
+    if (!response.ok) {
+      return { success: false, message: "unable to get content" };
     }
-    const data = await res.json();
-    return { data, sucess: true, message: `This ${id} has been deleted` };
-  } catch {
-    console.log("There was an error in the server");
-    return { sucess: false, message: `There was an error in the server` };
-  }
-};
-
-export const UpdatePost = async (info: info) => {
-  try {
-    const res = await fetch(
-      `https://jsonplaceholder.typicode.com/posts/${info.id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(info),
-      },
-    );
-    const data = await res.json();
-    return { data, sucess: true, message: `Post updated successfully` };
+    const data = await response.json();
+    const status = response.status;
+    return { data, status };
   } catch (error) {
-    throw new Error(`There was an error in the server ${error}`);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return { success: false, message: errorMessage };
   }
-};
+}
+
+export async function deletePost(PostId: number | string) {
+  const apiUrl = process.env.NEXT_API_URL;
+  if (!apiUrl) {
+    return {
+      success: false,
+      message: "Server configuration error: NEXT_API_URL is missing.",
+    };
+  }
+  const url = new URL(apiUrl);
+  url.searchParams.append("id", String(PostId));
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
+    });
+
+    if (!response.ok) {
+      return { success: false, message: "unable to delete content" };
+    }
+    if (
+      response.status === 204 ||
+      response.headers.get("content-length") === "0"
+    ) {
+      return { success: true, message: "Deleted successfully" };
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return { success: false, message: errorMessage };
+  }
+}
