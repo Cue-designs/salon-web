@@ -46,3 +46,29 @@ export async function createPost(content:Postcontent) {
     return { success: false, message: errorMessage }
   }
 }
+
+export async function deletePost() {
+  const apiUrl = process.env.NEXT_API_URL;
+  if (!apiUrl) {
+    return {
+      success: false,
+      message: "Server configuration error: NEXT_API_URL is missing.",
+    };
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
+    });
+
+    if (!response.ok) {
+    return { success: false, message: "unable to delete content" };
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    const errorMessage =  error instanceof Error ? error.message : String(error)
+    return { success: false, message: errorMessage}
+  }
+}
