@@ -79,3 +79,39 @@ export async function deletePost(PostId: number | string) {
     return { success: false, message: errorMessage };
   }
 }
+
+export async function updatePost({ title, content, PostId }: Data) {
+  const apiUrl = process.env.NEXT_API_URL;
+  if (!apiUrl) {
+    return {
+      success: false,
+      message: "Server configuration error: NEXT_API_URL is missing.",
+    };
+  }
+
+  const url = new URL(apiUrl);
+  url.searchParams.append("id", String(PostId));
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
+      body: JSON.stringify({ title, content }),
+    });
+
+    if (!response.ok) {
+      return { success: false, message: "unable to edit content" };
+    }
+
+    const data = await response.json();
+    const status = response.status;
+    return {
+      success: true,
+      data,
+      status,
+      message: "Your content has been edited  sucessfully",
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return { success: false, message: errorMessage };
+  }
+}
