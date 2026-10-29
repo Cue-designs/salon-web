@@ -1,5 +1,5 @@
 import { Data } from "@/app/names/crud";
-interface Postcontent {
+export interface Postcontent {
   body: Data;
 }
 export async function fetchData() {
@@ -74,6 +74,10 @@ export async function deletePost(PostId: number | string) {
     ) {
       return { success: true, message: "Deleted successfully" };
     }
+
+    /* Although this is not really need, i saw it online that it was a precatious method incase the deleted item sends back  a data response ,if it does not it resloves to  a null  value . This is educative .Just a mental note for me */
+    const data = await response.json().catch(() => null);
+    return { success: true, data, message: "Deleted successfully" };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     return { success: false, message: errorMessage };
