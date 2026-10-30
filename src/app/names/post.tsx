@@ -1,7 +1,8 @@
 import { fetchData } from "@/api/learn";
 import { Data } from "./crud";
 const PostList = async () => {
-  const fetched = await fetchData();
+  const res = await fetchData();
+  const fetched = res.data || [];
   return (
     <div>
       {fetched.map((post: Data) => (
