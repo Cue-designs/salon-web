@@ -1,5 +1,11 @@
+import PostList from "./post";
+
 const page = () => {
-  return <div>page</div>;
+  return (
+    <div>
+      <PostList />
+    </div>
+  );
 };
 
 export default page;
