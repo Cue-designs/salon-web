@@ -1,5 +1,7 @@
-import type { ReactNode } from "react";
-import { deletePost, updatePost } from "@/api/learn";
+"use client";
+import { Postcontent } from "@/api/learn";
+import { type ReactNode } from "react";
+import { deletePost, updatePost, createPost } from "@/api/learn";
 
 interface deletePostProp {
   children: ReactNode;
@@ -35,4 +37,20 @@ export function UpdateButton({
   };
 
   return <button onClick={() => hadleUpdate()}>{children}</button>;
+}
+
+export function createButton(
+  { body: { title, id, content } }: Postcontent,
+  children: ReactNode,
+) {
+  const handleCreate = async () => {
+    const createdPost = await createPost({ body: { title, id, content } });
+    return {
+      data: createdPost.data,
+      success: createdPost.success,
+      message: createdPost.message,
+    };
+  };
+
+  return <button onClick={() => handleCreate()}>{children}</button>;
 }
