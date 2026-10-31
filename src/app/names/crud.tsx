@@ -2,7 +2,7 @@ export interface Data {
   [key: string]: string | undefined | number;
   title: string;
   id?: number;
-  content: string;
+  body: string;
 }
 
 const crud = () => {

@@ -11,7 +11,7 @@ interface deletePostProp {
 interface updatePostProp {
   updateprop: deletePostProp;
   title: string;
-  content: string;
+  body: string;
 }
 
 export default function DeleteButton({ children, PostId }: deletePostProp) {
@@ -25,10 +25,10 @@ export default function DeleteButton({ children, PostId }: deletePostProp) {
 export function UpdateButton({
   updateprop: { children, PostId },
   title,
-  content,
+  body,
 }: updatePostProp) {
   const hadleUpdate = async () => {
-    const update = await updatePost({ PostId, title, content });
+    const update = await updatePost({ PostId, title, body });
     return {
       success: update.success,
       message: update.message,
@@ -40,11 +40,11 @@ export function UpdateButton({
 }
 
 export function createButton(
-  { body: { title, id, content } }: Postcontent,
+  { content: { title, id, body } }: Postcontent,
   children: ReactNode,
 ) {
   const handleCreate = async () => {
-    const createdPost = await createPost({ body: { title, id, content } });
+    const createdPost = await createPost({ content: { title, id, body } });
     return {
       data: createdPost.data,
       success: createdPost.success,
