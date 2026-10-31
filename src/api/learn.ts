@@ -1,6 +1,6 @@
 import { Data } from "@/app/names/crud";
 export interface Postcontent {
-  body: Data;
+  content: Data;
 }
 export async function fetchData() {
   const apiUrl = process.env.NEXT_API_URL;
@@ -22,7 +22,7 @@ export async function fetchData() {
   }
 }
 
-export async function createPost(content: Postcontent) {
+export async function createPost(contentPost: Postcontent) {
   const apiUrl = process.env.NEXT_API_URL;
   if (!apiUrl) {
     return {
@@ -34,7 +34,7 @@ export async function createPost(content: Postcontent) {
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=UTF-8" },
-      body: JSON.stringify(content.body),
+      body: JSON.stringify(contentPost.content),
     });
 
     if (!response.ok) {
