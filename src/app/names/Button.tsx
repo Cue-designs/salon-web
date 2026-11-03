@@ -19,7 +19,17 @@ export default function DeleteButton({ children, PostId }: deletePostProp) {
     const deleteResult = await deletePost(PostId);
     return { success: deleteResult.success, message: deleteResult.message };
   };
-  return <button onClick={() => handleDelete()}>{children}</button>;
+
+  return (
+    <button
+      type="button"
+      onClick={() => handleDelete()}
+      className="inline-flex items-center justify-center border-0 bg-transparent p-0 text-inherit outline-none transition focus-visible:ring-2 focus-visible:ring-[#aa5042] focus-visible:ring-offset-2"
+      aria-label="Delete post"
+    >
+      {children}
+    </button>
+  );
 }
 
 export function UpdateButton({
@@ -36,7 +46,16 @@ export function UpdateButton({
     };
   };
 
-  return <button onClick={() => hadleUpdate()}>{children}</button>;
+  return (
+    <button
+      type="button"
+      onClick={() => hadleUpdate()}
+      className="inline-flex items-center justify-center border-0 bg-transparent p-0 text-inherit outline-none transition focus-visible:ring-2 focus-visible:ring-[#aa5042] focus-visible:ring-offset-2"
+      aria-label="Edit post"
+    >
+      {children}
+    </button>
+  );
 }
 
 export function createButton(
@@ -52,5 +71,14 @@ export function createButton(
     };
   };
 
-  return <button onClick={() => handleCreate()}>{children}</button>;
+  return (
+    <button
+      type="button"
+      onClick={() => handleCreate()}
+      className="inline-flex items-center justify-center border-0 bg-transparent p-0 text-inherit outline-none transition focus-visible:ring-2 focus-visible:ring-[#aa5042] focus-visible:ring-offset-2"
+      aria-label="Create post"
+    >
+      {children}
+    </button>
+  );
 }

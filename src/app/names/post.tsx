@@ -1,12 +1,12 @@
 import { fetchData } from "@/api/learn";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Data } from "./crud";
-const PostList = async () => {
-  /*  const res = await fetchData();
-  const fetched = Array.isArray(res) ? res : res.data || []; */
-  const fetched = await fetchData();
+import DeleteButton from "./Button";
 
-  // Ensure it's treated as an array safely
+const PostList = async () => {
+  const fetched = await fetchData();
   const posts = Array.isArray(fetched) ? fetched : [];
+
   return (
     <section
       aria-label="Posts"
@@ -18,9 +18,20 @@ const PostList = async () => {
             className="group flex min-h-64 flex-col justify-between border border-[#4f3130]/20 bg-[#f0dfbd] p-6 transition duration-300 hover:-translate-y-1 hover:bg-[#d8d78f] hover:shadow-[0_16px_40px_rgba(79,49,48,0.12)] sm:p-8"
             key={post.id}
           >
-            <span className="font-serif text-sm italic text-[#aa5042]">
-              No. {post.id}
-            </span>
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-serif text-sm italic text-[#aa5042]">
+                No. {post.id}
+              </span>
+
+              <div className="flex items-center gap-2">
+                <FaEdit className="text-base" />
+
+                <DeleteButton PostId={Number(post.id ?? 0)}>
+                  <FaTrashAlt aria-label="Delete post" className="text-base" />
+                </DeleteButton>
+              </div>
+            </div>
+
             <div className="pt-10">
               <h2 className="mb-3 font-serif text-3xl font-normal leading-tight text-[#4f3130] sm:text-4xl">
                 {post.title}
