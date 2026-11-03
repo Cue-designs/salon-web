@@ -1,3 +1,4 @@
+"use server";
 import { Data } from "@/app/names/crud";
 export interface Postcontent {
   content: Data;
@@ -84,7 +85,7 @@ export async function deletePost(PostId: number | string) {
   }
 }
 
-export async function updatePost({ title, content, PostId }: Data) {
+export async function updatePost({ title, body, PostId }: Data) {
   const apiUrl = process.env.NEXT_API_URL;
   if (!apiUrl) {
     return {
@@ -99,7 +100,7 @@ export async function updatePost({ title, content, PostId }: Data) {
     const response = await fetch(url, {
       method: "PATCH",
       headers: { "Content-Type": "application/json; charset=UTF-8" },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, body }),
     });
 
     if (!response.ok) {

@@ -1,6 +1,7 @@
 "use client";
 import { Postcontent } from "@/api/learn";
-import { type ReactNode } from "react";
+import { type ReactNode, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { deletePost, updatePost, createPost } from "@/api/learn";
 
 interface deletePostProp {
@@ -15,20 +16,49 @@ interface updatePostProp {
 }
 
 export default function DeleteButton({ children, PostId }: deletePostProp) {
-  const handleDelete = async () => {
-    const deleteResult = await deletePost(PostId);
-    return { success: deleteResult.success, message: deleteResult.message };
-  };
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   return (
-    <button
-      type="button"
-      onClick={() => handleDelete()}
-      className="inline-flex items-center justify-center border-0 bg-transparent p-0 text-inherit outline-none transition focus-visible:ring-2 focus-visible:ring-[#aa5042] focus-visible:ring-offset-2"
-      aria-label="Delete post"
-    >
-      {children}
-    </button>
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() =>
+          startTransition(async () => {
+            setError(null);
+            try {
+              const result = await deletePost(PostId);
+              if (!result.success) {
+                setError(result.message || "Could not delete this post.");
+                return;
+              }
+              router.refresh();
+            } catch (caughtError) {
+              setError(
+                caughtError instanceof Error
+                  ? caughtError.message
+                  : "Could not delete this post. Please try again.",
+              );
+            }
+          })
+        }
+        disabled={isPending}
+        aria-label={isPending ? "Deleting post" : "Delete post"}
+        aria-busy={isPending}
+        className="inline-flex items-center justify-center border-0 bg-transparent p-0 text-inherit outline-none transition focus-visible:ring-2 focus-visible:ring-[#aa5042] focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
+      >
+        {children}
+      </button>
+      {error && (
+        <p
+          role="alert"
+          className="absolute right-0 top-full z-10 mt-2 w-56 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs leading-5 text-red-800 shadow-md"
+        >
+          {error}
+        </p>
+      )}
+    </div>
   );
 }
 
