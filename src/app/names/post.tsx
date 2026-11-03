@@ -2,6 +2,7 @@ import { fetchData } from "@/api/learn";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Data } from "./crud";
 import DeleteButton from "./Button";
+import { UpdateButton } from "./Button";
 
 const PostList = async () => {
   const fetched = await fetchData();
@@ -24,10 +25,22 @@ const PostList = async () => {
               </span>
 
               <div className="flex items-center gap-2">
-                <FaEdit className="text-base" />
+                <UpdateButton
+                  updateprop={{
+                    children: <FaEdit className="text-base" />,
+                    PostId: Number(post.id ?? 0),
+                  }}
+                  title={post.title}
+                  body={post.body}
+                ></UpdateButton>
 
                 <DeleteButton PostId={Number(post.id ?? 0)}>
-                  <FaTrashAlt aria-label="Delete post" className="text-base" />
+                  <span>
+                    <FaTrashAlt
+                      aria-label="Delete post"
+                      className="text-base"
+                    />
+                  </span>
                 </DeleteButton>
               </div>
             </div>
