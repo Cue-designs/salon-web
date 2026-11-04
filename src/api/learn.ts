@@ -23,6 +23,29 @@ export async function fetchData() {
   }
 }
 
+export async function fetchArticleData() {
+  const apiUrl = process.env.NEXT_API_URL;
+  if (!apiUrl) {
+    return {
+      success: false,
+      message: "Server configuration error: NEXT_API_URL is missing.",
+    };
+  }
+
+  const url = new URL(apiUrl);
+  url.searchParams.append("id", "1");
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      return { success: false, message: "Invalid response" };
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return { success: false, message: `Server error ${error}` };
+  }
+}
+
 export async function createPost(contentPost: Postcontent) {
   const apiUrl = process.env.NEXT_API_URL;
   if (!apiUrl) {
