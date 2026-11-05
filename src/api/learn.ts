@@ -23,7 +23,7 @@ export async function fetchData() {
   }
 }
 
-export async function fetchArticleData() {
+export async function fetchArticleData(Postid: number | string) {
   const apiUrl = process.env.NEXT_API_URL;
   if (!apiUrl) {
     return {
@@ -33,7 +33,7 @@ export async function fetchArticleData() {
   }
 
   const url = new URL(apiUrl);
-  url.searchParams.append("id", "1");
+  url.searchParams.append("id", String(Postid));
   try {
     const response = await fetch(url);
     if (!response.ok) {
