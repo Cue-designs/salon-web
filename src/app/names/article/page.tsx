@@ -2,7 +2,7 @@
 
 import { fetchData } from "@/api/learn";
 import { useState, useEffect } from "react";
-import { Data } from "../crud";
+import type { Data } from "../crud";
 
 const Articlepage = () => {
   const [search, setSearch] = useState("");

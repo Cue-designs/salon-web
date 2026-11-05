@@ -1,5 +1,5 @@
 "use server";
-import { Data } from "@/app/names/crud";
+import type { Data } from "@/app/names/crud";
 export interface Postcontent {
   content: Data;
 }
