@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import SiteFooter from "@/components/site-footer";
-import SiteHeader from "@/components/site-header";
-import WhatsAppFab from "@/components/whatsapp-fab";
+import SiteChrome from "@/components/site-chrome";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,10 +15,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
       <body>
-        <SiteHeader />
-        {children}
-        <SiteFooter />
-        <WhatsAppFab />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );
