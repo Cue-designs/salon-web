@@ -44,6 +44,17 @@ The WhatsApp button can use `NEXT_PUBLIC_WHATSAPP_NUMBER` for a prefilled salon 
 NEXT_PUBLIC_WHATSAPP_NUMBER=15551234567
 ```
 
+Admin pages are protected with HTTP Basic Auth. Set both variables in `.env.local`
+for local use and in your hosting provider's environment settings for deployment:
+
+```env
+ADMIN_USERNAME=your-admin-username
+ADMIN_PASSWORD=use-a-long-unique-password
+```
+
+Requests to `/Admin` and its subroutes are denied until both values are configured.
+Use HTTPS in production and keep these credentials private.
+
 Restart the development server after changing environment variables.
 
 ## Useful commands
