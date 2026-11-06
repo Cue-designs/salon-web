@@ -12,6 +12,7 @@ const links = [
   { href: "/journal", label: "Field notes" },
   { href: "/visit", label: "Find us" },
   { href: "/Login", label: "Login" },
+  { href: "/names", label: "Articles" },
 ];
 
 export default function SiteHeader() {
