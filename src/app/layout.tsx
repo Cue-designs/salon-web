@@ -11,7 +11,11 @@ export const metadata: Metadata = {
     "A neighbourhood hair house for considered cuts, beautiful colour, and the kind of appointment that feels like a deep breath.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body>
