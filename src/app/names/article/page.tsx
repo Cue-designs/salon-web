@@ -36,7 +36,11 @@ const Articlepage = () => {
   });
 
   if (loading) {
-    return <div className="px-6 py-16 text-center">Loading articles...</div>;
+    return (
+      <div className="px-6 py-16 text-center">
+        Loading articles please wait...
+      </div>
+    );
   }
 
   return (
